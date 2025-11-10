@@ -146,103 +146,96 @@
                 }
             });
 
-
-
             // banner scroll functionality
+const bannerData = { 
+    currentIndex: 0, 
+    banners: [
+        {
+            id: 1,
+            title: "Xbox Pro✨",
+            subtitle: "Controller",
+            highlight: "Wireless",
+            description: "Revolution Controller with enhanced precision",
+            image: "./access/image/xbox05.png",
+            color: "bg-primary"
+        },
+        {
+            id: 2,
+            title: "Headphone Pro✨",
+            subtitle: "Audio",
+            highlight: "Premium",
+            description: "Immersive sound experience with noise cancellation",
+            image: "./access/image/headphone02.png",
+            color: "bg-green-500"
+        }
+    ]
+};
 
+function createBannerHTML(banner, index) {
+    return `
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <div class="flex flex-col justify-center">
+                <h2 class="text-4xl sm:text-5xl mb-6">${banner.title}</h2>
+                <h2 class="text-4xl sm:text-5xl mb-4">
+                    <span class="${banner.color} rounded-xl px-1 text-gray-50">${banner.highlight}</span> ${banner.subtitle}
+                </h2>
+                <p class="mb-2">${banner.description}</p>
+                <section class="${banner.color} ml-1 text-center w-30 hover:bg-secondary transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-sm mt-2 py-2 rounded-3xl text-gray-50"> <!-- កែពី hover:bg-second ទៅ hover:bg-secondary -->
+                    <button>Shop Now <i class="fa-solid fa-store"></i></button>
+                </section>
+            </div>
+            <div class="flex justify-center items-center">
+                <img src="${banner.image}" alt="${banner.title}">
+            </div>
+        </div>
+            `;
+}
 
-            const bannerData = {  // កែពី bannerDate ទៅ bannerData
-                currentIndex: 0,  // កែពី currenIndex ទៅ currentIndex
-                banners: [
-                    {
-                        id: 1,
-                        title: "Xbox Pro✨",
-                        subtitle: "Controller",
-                        highlight: "Wireless",
-                        description: "Revolution Controller with enhanced precision",
-                        image: "./access/image/xbox05.png",
-                        color: "bg-primary"  // កែពី bg-blue-500 ទៅ bg-primary
-                    },
-                    {
-                        id: 2,
-                        title: "Headphone Pro✨",
-                        subtitle: "Audio",
-                        highlight: "Premium",
-                        description: "Immersive sound experience with noise cancellation",
-                        image: "./access/image/headphone02.png",
-                        color: "bg-green-500"  // កែពី bg-green-500 ទៅ bg-secondary
-                    }
-                ]
-            };
-
-            function createBannerHTML(banner, index) {
-                return `
-                    <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-                        <div class="flex flex-col justify-center">
-                            <h2 class="text-4xl sm:text-5xl mb-6">${banner.title}</h2>
-                            <h2 class="text-4xl sm:text-5xl mb-4">
-                                <span class="${banner.color} rounded-xl px-1 text-gray-50">${banner.highlight}</span> ${banner.subtitle}
-                            </h2>
-                            <p class="mb-2">${banner.description}</p>
-                            <section class="${banner.color} ml-1 text-center w-30 hover:bg-secondary transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-sm mt-2 py-2 rounded-3xl text-gray-50"> <!-- កែពី hover:bg-second ទៅ hover:bg-secondary -->
-                                <button>Shop Now <i class="fa-solid fa-store"></i></button>
-                            </section>
-                        </div>
-                        <div class="flex justify-center items-center">
-                            <img src="${banner.image}" alt="${banner.title}">
-                        </div>
-                    </div>
-                `;
-            }
-
-            function showBanner(index) {
-                bannerData.currentIndex = index;  // កែពី bannerDate ទៅ bannerData និង currenIndex ទៅ currentIndex
-                const bannerContainer = document.getElementById("banner");
-                const bannerWidth = bannerContainer.clientWidth;
+function showBanner(index) {
+    bannerData.currentIndex = index; 
+    const bannerContainer = document.getElementById("banner");
+    const bannerWidth = bannerContainer.clientWidth;
                 
-                bannerContainer.scrollTo({
-                    left: index * bannerWidth, 
-                    behavior: 'smooth'
-                });
-            }
+    bannerContainer.scrollTo({
+        left: index * bannerWidth, 
+        behavior: 'smooth'
+    });
+}
 
-            function handleScroll() {
-                const bannerContainer = document.getElementById("banner");
-                const scrollLeft = bannerContainer.scrollLeft;
-                const bannerWidth = bannerContainer.clientWidth;
-                const newIndex = Math.round(scrollLeft / bannerWidth);
+function handleScroll() {
+    const bannerContainer = document.getElementById("banner");
+    const scrollLeft = bannerContainer.scrollLeft;
+    const bannerWidth = bannerContainer.clientWidth;
+    const newIndex = Math.round(scrollLeft / bannerWidth);
 
-                if (newIndex !== bannerData.currentIndex) {  // កែពី bannerDate ទៅ bannerData និង currenIndex ទៅ currentIndex
-                    bannerData.currentIndex = newIndex;  // កែពី bannerDate ទៅ bannerData និង currenIndex ទៅ currentIndex
-                }
-            }
+    if (newIndex !== bannerData.currentIndex) { 
+        bannerData.currentIndex = newIndex;  
+    }
+}
 
-            function initBanner() {
-                const bannerContainer = document.getElementById("banner");
+function initBanner() {
+    const bannerContainer = document.getElementById("banner");
                 
-                // កំណត់ style សម្រាប់ horizontal scrolling
-                
-                let bannersHTML = "";
-                bannerData.banners.forEach((banner, index) => {  // កែពី bannerDate ទៅ bannerData
-                    bannersHTML += `
-                        <div class="flex-shrink-0 w-full snap-center px-4">
-                            ${createBannerHTML(banner, index)}
-                        </div>
+    // កំណត់ style សម្រាប់ horizontal scrolling          
+    let bannersHTML = "";
+    bannerData.banners.forEach((banner, index) => { 
+        bannersHTML += `
+                <div class="flex-shrink-0 w-full snap-center px-4">
+                    ${createBannerHTML(banner, index)}
+                </div>
                     `;
-                });
-                bannerContainer.innerHTML = bannersHTML;
-
-                bannerContainer.addEventListener("scroll", handleScroll);
-            }
-
+    });
+    bannerContainer.innerHTML = bannersHTML;
+    bannerContainer.addEventListener("scroll", handleScroll);
+};
             // Initialize banner when DOM is loaded
-            initBanner();
+initBanner();
             // Auto-scroll banners every 6 seconds
-            setInterval(() => {
-                let nextIndex = (bannerData.currentIndex + 1) % bannerData.banners.length;  // កែពី bannerDate ទៅ bannerData និង currenIndex ទៅ currentIndex
-                showBanner(nextIndex);
-            }, 6000); // Change banner every 6 seconds
-        });
+setInterval(() => {
+    let nextIndex = (bannerData.currentIndex + 1) % bannerData.banners.length; 
+        showBanner(nextIndex);
+    }, 6000);
+});
 
 
 
